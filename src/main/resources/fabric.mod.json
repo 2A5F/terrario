@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "tr",
+  "version": "${version}",
+  "name": "Terrario",
+  "description": "Terraria in minecraft",
+  "authors": [
+    "2A5F"
+  ],
+  "contact": {
+    "homepage": "",
+    "sources": ""
+  },
+
+  "license": "MIT",
+  "icon": "assets/tr/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "co.volight.terrario.TrKt::init"
+    ],
+    "client": [
+      "co.volight.terrario.TrClientKt::initClient"
+    ]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric-language-kotlin": "*",
+    "minecraft": "1.18.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}

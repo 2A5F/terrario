@@ -1,0 +1,9 @@
+{
+  "itemGroup.tr.main": "Terrario",
+
+  "block.tr.tin_ore": "Tin Ore",
+  "block.tr.lead_ore": "Lead Ore",
+  "block.tr.silver_ore": "Silver Ore",
+  "block.tr.tungsten_ore": "Tungsten Ore",
+  "block.tr.platinum_ore": "Platinum Ore"
+}
