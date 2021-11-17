@@ -5,5 +5,11 @@
   "block.tr.lead_ore": "Lead Ore",
   "block.tr.silver_ore": "Silver Ore",
   "block.tr.tungsten_ore": "Tungsten Ore",
-  "block.tr.platinum_ore": "Platinum Ore"
+  "block.tr.platinum_ore": "Platinum Ore",
+
+  "item.tr.raw_tin": "Raw Tin",
+  "item.tr.raw_lead": "Raw Lead",
+  "item.tr.raw_silver": "Raw Silver",
+  "item.tr.raw_tungsten": "Raw Tungsten",
+  "item.tr.raw_platinum": "Raw Platinum"
 }

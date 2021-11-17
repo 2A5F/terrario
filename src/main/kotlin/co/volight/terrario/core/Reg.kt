@@ -4,9 +4,12 @@ import co.volight.terrario.Tr
 import co.volight.terrario.itemgroups.mainGroup
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
+import net.fabricmc.fabric.api.`object`.builder.v1.block.FabricBlockSettings
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry
+import net.minecraft.block.AbstractBlock
 import net.minecraft.block.Block
 import net.minecraft.client.particle.Particle
 import net.minecraft.client.render.entity.EntityRenderer
@@ -25,48 +28,64 @@ import net.minecraft.stat.Stats
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
 
-interface RegId {
+interface Idspace {
     val idspace: String get() = Tr.id
 }
 
-interface RegName {
+interface Nameable {
     val name: String
 }
 
-interface Reg: RegName, RegId {
-    fun reg()
-}
-
-interface SelfRef<T>: Reg {
+interface Instance<T> : Idspace, Nameable {
     val impl: T
 }
 
-interface BlockReg<T: Block> : SelfRef<T> {
-    override fun reg() {
-        Registry.register(Registry.BLOCK, Identifier(idspace, name), impl)
-    }
+interface Reg<T>: Instance<T>, Idspace, Nameable
+
+fun interface JoinItemGroup {
+    fun joinItemGroup(settings: Item.Settings)
 }
 
-interface ItemReg<T: Item> : SelfRef<T> {
-    override fun reg() {
-        Registry.register(Registry.ITEM, Identifier(idspace, name), impl)
-    }
-}
-
-interface JoinItemGroup {
-    fun joinItemGroup(settings: Item.Settings) {
+interface WithItemGroup: JoinItemGroup {
+    override fun joinItemGroup(settings: Item.Settings) {
         settings.group(mainGroup)
     }
 }
 
-interface BlockRegWithItem<T> : BlockReg<T> where T : Block, T: JoinItemGroup {
-    fun makeBlockItem(block: T): BlockItem {
-        return BlockItem(block, Item.Settings().also(block::joinItemGroup))
-    }
+fun <S> S.settings(): Item.Settings where S: Instance<out Item> {
+    return FabricItemSettings()
+}
 
-    fun regBlockItem() {
-        Registry.register(Registry.ITEM, Identifier(idspace, name), makeBlockItem(impl))
-    }
+@JvmName("settingsWithItemGroup")
+fun <S> S.settings(): Item.Settings where S: Instance<out Item>, S: JoinItemGroup {
+    return FabricItemSettings().also(::joinItemGroup)
+}
+
+fun <S> S.regBlock() where S: Instance<out Block>, S: Idspace, S: Nameable {
+    Registry.register(Registry.BLOCK, Identifier(idspace, name), impl)
+}
+
+fun <S> S.regItem() where S: Instance<out Item>, S: Idspace, S: Nameable {
+    Registry.register(Registry.ITEM, Identifier(idspace, name), impl)
+}
+
+fun <T> makeBlockItem(block: T): BlockItem where T: Block {
+    if (block is JoinItemGroup) return makeBlockItem(block)
+    return BlockItem(block, Item.Settings())
+}
+
+fun <T> JoinItemGroup.makeBlockItem(block: T): BlockItem where T: Block {
+    return BlockItem(block, Item.Settings().also(::joinItemGroup))
+}
+
+fun <S> S.regBlockItem() where S: Instance<out Block>, S: Idspace, S: Nameable {
+    if (this is JoinItemGroup) return regBlockItem()
+    Registry.register(Registry.ITEM, Identifier(idspace, name), makeBlockItem(impl))
+}
+
+@JvmName("regBlockItemWithItemGroup")
+fun <S> S.regBlockItem() where S: Instance<out Block>, S: Idspace, S: Nameable, S: JoinItemGroup {
+    Registry.register(Registry.ITEM, Identifier(idspace, name), makeBlockItem(impl))
 }
 
 fun regStat(name: String, statFormatter: StatFormatter = StatFormatter.DEFAULT): Identifier {
@@ -80,7 +99,7 @@ fun <T : ScreenHandler> regScreenHandler(name: String, factory: ScreenHandlerReg
     return ScreenHandlerRegistry.registerSimple(Identifier(Tr.id, name), factory)
 }
 
-interface ParticleReg<T : ParticleEffect>: RegName, RegId {
+interface ParticleReg<T : ParticleEffect>: Nameable, Idspace {
     val type: ParticleType<T>
 
     @Environment(EnvType.CLIENT)
@@ -97,7 +116,7 @@ interface ParticleReg<T : ParticleEffect>: RegName, RegId {
     }
 }
 
-interface RegEntity<T : Entity> : RegName, RegId {
+interface RegEntity<T : Entity> : Nameable, Idspace {
     val type: EntityType<T>
 
     fun regType() {

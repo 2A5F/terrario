@@ -5,5 +5,11 @@
   "block.tr.lead_ore": "铅矿石",
   "block.tr.silver_ore": "银矿石",
   "block.tr.tungsten_ore": "钨矿石",
-  "block.tr.platinum_ore": "铂矿石"
+  "block.tr.platinum_ore": "铂矿石",
+
+  "item.tr.raw_tin": "粗锡",
+  "item.tr.raw_lead": "粗铅",
+  "item.tr.raw_silver": "粗银",
+  "item.tr.raw_tungsten": "粗钨",
+  "item.tr.raw_platinum": "粗铂"
 }
