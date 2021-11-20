@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "co.volight.terrario.mixin.entities",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+  ],
+  "client": [
+    "MixinSlimeEntityDirectInvoke"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

@@ -6,4 +6,4 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder
 
-val mainGroup = FabricItemGroupBuilder.build(Identifier(Tr.id, "main")) { ItemStack(OreBlock.Tin.impl) }
+val mainGroup = FabricItemGroupBuilder.build(Identifier(Tr.id, "main")) { ItemStack(OreBlock.Tin.impl) }!!

@@ -11,7 +11,6 @@
     "homepage": "",
     "sources": ""
   },
-
   "license": "MIT",
   "icon": "assets/tr/icon.png",
   "environment": "*",
@@ -20,10 +19,12 @@
       "co.volight.terrario.TrKt::init"
     ],
     "client": [
-      "co.volight.terrario.TrClientKt::initClient"
+      "co.volight.terrario.TrKt::initClient"
     ]
   },
-  "mixins": [],
+  "mixins": [
+    "tr.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.11.3",
     "fabric-language-kotlin": "*",
