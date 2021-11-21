@@ -33,44 +33,32 @@ typealias McSlimeEntityModel<T> = net.minecraft.client.render.entity.model.Slime
 typealias MCSlimeOverlayFeatureRenderer<T> = net.minecraft.client.render.entity.feature.SlimeOverlayFeatureRenderer<T>
 
 object Slime {
-    object GreenSlime: RegLivingEntity<SlimeEntity> {
+    abstract class BasicSlime: RegLivingEntity<SlimeEntity> {
+        open val size = 2
+        open val scale = 1.0f
+        override val impl: EntityType<SlimeEntity> by lazy {
+            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, makeEntity { type, world ->
+                SlimeEntity(type, world, SlimeEntityData(size, scale))
+            }) .dimensions(EntityDimensions.changing(1.96f, 1.96f).scaled(scale)).build()
+        }
+        override val attr: DefaultAttributeContainer.Builder by lazy {
+            HostileEntity.createHostileAttributes()
+        }
+        override val render = makeRender { SlimeEntityRenderer(it, name, scale) }
+    }
+    object GreenSlime: BasicSlime() {
         override val name = "green_slime"
-        private const val scale = 0.9f
-        override val impl: EntityType<SlimeEntity> by lazy {
-            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, makeEntity { type, world ->
-                SlimeEntity(type, world, SlimeEntityData(2, scale))
-            }) .dimensions(EntityDimensions.changing(2.04f, 2.04f).scaled(scale)).build()
-        }
-        override val attr: DefaultAttributeContainer.Builder by lazy {
-            HostileEntity.createHostileAttributes()
-        }
-        override val render = makeRender { SlimeEntityRenderer(it, name, scale) }
+        override val scale = 0.875f
     }
-    object BlueSlime: RegLivingEntity<SlimeEntity> {
+    object BlueSlime: BasicSlime() {
         override val name = "blue_slime"
-        private const val scale = 1.0f
-        override val impl: EntityType<SlimeEntity> by lazy {
-            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, makeEntity { type, world ->
-                SlimeEntity(type, world, SlimeEntityData(2, scale))
-            }) .dimensions(EntityDimensions.changing(2.04f, 2.04f).scaled(scale)).build()
-        }
-        override val attr: DefaultAttributeContainer.Builder by lazy {
-            HostileEntity.createHostileAttributes()
-        }
-        override val render = makeRender { SlimeEntityRenderer(it, name, scale) }
     }
-    object RedSlime: RegLivingEntity<SlimeEntity> {
+    object RedSlime: BasicSlime() {
         override val name = "red_slime"
-        private const val scale = 1.1f
-        override val impl: EntityType<SlimeEntity> by lazy {
-            FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, makeEntity { type, world ->
-                SlimeEntity(type, world, SlimeEntityData(2, scale))
-            }) .dimensions(EntityDimensions.changing(2.04f, 2.04f).scaled(scale)).build()
-        }
-        override val attr: DefaultAttributeContainer.Builder by lazy {
-            HostileEntity.createHostileAttributes()
-        }
-        override val render = makeRender { SlimeEntityRenderer(it, name, scale) }
+    }
+    object PurpleSlime: BasicSlime() {
+        override val name = "purple_slime"
+        override val scale = 1.125f
     }
 }
 

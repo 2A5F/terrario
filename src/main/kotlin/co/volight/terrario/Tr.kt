@@ -42,6 +42,7 @@ object Tr: Idspace {
         Slime.GreenSlime,
         Slime.BlueSlime,
         Slime.RedSlime,
+        Slime.PurpleSlime,
     )
 }
 
