@@ -1,6 +1,7 @@
 package co.volight.terrario.entities
 
 import co.volight.terrario.core.*
+import co.volight.terrario.particles.GelParticle
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.fabricmc.fabric.api.`object`.builder.v1.entity.FabricEntityTypeBuilder
@@ -20,9 +21,10 @@ import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.*
 import net.minecraft.entity.attribute.DefaultAttributeContainer
 import net.minecraft.entity.mob.HostileEntity
+import net.minecraft.loot.LootTables
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.particle.ParticleEffect
-import net.minecraft.particle.ParticleTypes
+import net.minecraft.util.Identifier
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.LocalDifficulty
 import net.minecraft.world.ServerWorldAccess
@@ -34,12 +36,11 @@ typealias McSlimeEntityModel<T> = net.minecraft.client.render.entity.model.Slime
 typealias MCSlimeOverlayFeatureRenderer<T> = net.minecraft.client.render.entity.feature.SlimeOverlayFeatureRenderer<T>
 
 object Slime {
-    abstract class BasicSlime: RegLivingEntity<SlimeEntity> {
+    abstract class Basic(override val name: String, open val scale: Float = 1.0f, val particles: () -> ParticleEffect): RegLivingEntity<SlimeEntity> {
         open val size = 2
-        open val scale = 1.0f
         override val impl: EntityType<SlimeEntity> by lazy {
             FabricEntityTypeBuilder.create(SpawnGroup.MONSTER, makeEntity { type, world ->
-                SlimeEntity(type, world, SlimeEntityData(size, scale))
+                SlimeEntity(type, world, SlimeEntityData(size, scale), particles)
             }) .dimensions(EntityDimensions.changing(1.96f, 1.96f).scaled(scale)).build()
         }
         override val attr: DefaultAttributeContainer.Builder by lazy {
@@ -47,25 +48,15 @@ object Slime {
         }
         override val render = makeRender { SlimeEntityRenderer(it, name, scale) }
     }
-    object GreenSlime: BasicSlime() {
-        override val name = "green_slime"
-        override val scale = 0.875f
-    }
-    object BlueSlime: BasicSlime() {
-        override val name = "blue_slime"
-    }
-    object RedSlime: BasicSlime() {
-        override val name = "red_slime"
-    }
-    object PurpleSlime: BasicSlime() {
-        override val name = "purple_slime"
-        override val scale = 1.125f
-    }
+    object Green: Basic("green_slime", 0.875f, particles = { GelParticle.Green.impl })
+    object Blue: Basic("blue_slime", particles = { GelParticle.Blue.impl })
+    object Red: Basic("red_slime", particles = { GelParticle.Red.impl })
+    object Purple: Basic("purple_slime", 1.125f, particles = { GelParticle.Purple.impl })
 }
 
 data class SlimeEntityData(val size: Int, val scale: Float)
 
-open class SlimeEntity(entityType: EntityType<out SlimeEntity>, world: World, val data: SlimeEntityData) : McSlimeEntity(entityType, world) {
+open class SlimeEntity(entityType: EntityType<out SlimeEntity>, world: World, val data: SlimeEntityData, val particles: () -> ParticleEffect) : McSlimeEntity(entityType, world) {
     override fun initialize(
         world: ServerWorldAccess,
         difficulty: LocalDifficulty,
@@ -83,9 +74,9 @@ open class SlimeEntity(entityType: EntityType<out SlimeEntity>, world: World, va
         self.directRemove(reason)
     }
 
-    override fun getParticles(): ParticleEffect? {
-        return ParticleTypes.ITEM_SLIME // TODO
-    }
+    override fun getParticles(): ParticleEffect = particles()
+
+    override fun getLootTableId(): Identifier = type.lootTableId
 }
 
 @Environment(EnvType.CLIENT)

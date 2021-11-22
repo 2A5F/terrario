@@ -7,17 +7,20 @@ import co.volight.terrario.Tr.blocks
 import co.volight.terrario.Tr.entities
 import co.volight.terrario.Tr.livingEntities
 import co.volight.terrario.Tr.items
+import co.volight.terrario.Tr.particles
 import co.volight.terrario.blocks.OreBlock
 import co.volight.terrario.core.*
 import co.volight.terrario.entities.Slime
 import co.volight.terrario.items.Gel
 import co.volight.terrario.items.Ore
+import co.volight.terrario.particles.GelParticle
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.Item
+import net.minecraft.particle.ParticleEffect
 
 object Tr: Idspace {
     const val id = "tr"
@@ -37,17 +40,23 @@ object Tr: Idspace {
         Ore.Silver,
         Ore.Tungsten,
         Ore.Platinum,
-        Gel.GreenGel,
-        Gel.BlueGel,
-        Gel.RedGel,
-        Gel.PurpleGel,
+        Gel.Green,
+        Gel.Blue,
+        Gel.Red,
+        Gel.Purple,
     )
     val entities = listOf<RegEntity<out Entity>>()
     val livingEntities = listOf<RegLivingEntity<out LivingEntity>>(
-        Slime.GreenSlime,
-        Slime.BlueSlime,
-        Slime.RedSlime,
-        Slime.PurpleSlime,
+        Slime.Green,
+        Slime.Blue,
+        Slime.Red,
+        Slime.Purple,
+    )
+    val particles = listOf<RegParticle<out ParticleEffect>>(
+        GelParticle.Green,
+        GelParticle.Blue,
+        GelParticle.Red,
+        GelParticle.Purple
     )
 }
 
@@ -64,6 +73,9 @@ fun init() {
 
     initEntityAttrs()
     logger.info("$logName Entity attrs initialized")
+
+    initParticles()
+    logger.info("$logName Particles initialized")
 }
 
 fun initBlocks() {
@@ -96,6 +108,12 @@ fun initEntityAttrs() {
     }
 }
 
+fun initParticles() {
+    for (it in particles) {
+        it.regParticle()
+    }
+}
+
 @Suppress("unused")
 @Environment(EnvType.CLIENT)
 fun initClient() {
@@ -107,6 +125,9 @@ fun initClient() {
 
     initEntityRenders()
     logger.info("$logName Entity renders initialized")
+
+    initParticleFactories()
+    logger.info("$logName Particle factories initialized")
 }
 
 @Environment(EnvType.CLIENT)
@@ -126,5 +147,11 @@ fun initEntityRenders() {
     }
     for (it in livingEntities) {
         it.regEntityRender()
+    }
+}
+
+fun initParticleFactories() {
+    for (it in particles) {
+        it.regParticleFactory()
     }
 }
