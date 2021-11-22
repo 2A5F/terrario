@@ -18,10 +18,11 @@ import net.minecraft.client.render.entity.model.EntityModelPartNames
 import net.minecraft.client.render.entity.model.SinglePartEntityModel
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.*
-import net.minecraft.entity.Entity.RemovalReason
 import net.minecraft.entity.attribute.DefaultAttributeContainer
 import net.minecraft.entity.mob.HostileEntity
 import net.minecraft.nbt.NbtCompound
+import net.minecraft.particle.ParticleEffect
+import net.minecraft.particle.ParticleTypes
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.LocalDifficulty
 import net.minecraft.world.ServerWorldAccess
@@ -80,6 +81,10 @@ open class SlimeEntity(entityType: EntityType<out SlimeEntity>, world: World, va
     override fun remove(reason: RemovalReason) {
         val self = this as MobEntityDirectInvoke
         self.directRemove(reason)
+    }
+
+    override fun getParticles(): ParticleEffect? {
+        return ParticleTypes.ITEM_SLIME // TODO
     }
 }
 

@@ -10,6 +10,7 @@ import co.volight.terrario.Tr.items
 import co.volight.terrario.blocks.OreBlock
 import co.volight.terrario.core.*
 import co.volight.terrario.entities.Slime
+import co.volight.terrario.items.Gel
 import co.volight.terrario.items.Ore
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -36,6 +37,10 @@ object Tr: Idspace {
         Ore.Silver,
         Ore.Tungsten,
         Ore.Platinum,
+        Gel.GreenGel,
+        Gel.BlueGel,
+        Gel.RedGel,
+        Gel.PurpleGel,
     )
     val entities = listOf<RegEntity<out Entity>>()
     val livingEntities = listOf<RegLivingEntity<out LivingEntity>>(

@@ -11,5 +11,10 @@
   "item.tr.raw_lead": "Raw Lead",
   "item.tr.raw_silver": "Raw Silver",
   "item.tr.raw_tungsten": "Raw Tungsten",
-  "item.tr.raw_platinum": "Raw Platinum"
+  "item.tr.raw_platinum": "Raw Platinum",
+
+  "item.tr.green_gel": "Green Gel",
+  "item.tr.blue_gel": "Blue Gel",
+  "item.tr.red_gel": "Red Gel",
+  "item.tr.purple_gel": "Purple Gel"
 }

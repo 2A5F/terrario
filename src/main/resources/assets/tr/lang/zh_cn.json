@@ -11,5 +11,10 @@
   "item.tr.raw_lead": "粗铅",
   "item.tr.raw_silver": "粗银",
   "item.tr.raw_tungsten": "粗钨",
-  "item.tr.raw_platinum": "粗铂"
+  "item.tr.raw_platinum": "粗铂",
+
+  "item.tr.green_gel": "绿色凝胶",
+  "item.tr.blue_gel": "蓝色凝胶",
+  "item.tr.red_gel": "红色凝胶",
+  "item.tr.purple_gel": "紫色凝胶"
 }
