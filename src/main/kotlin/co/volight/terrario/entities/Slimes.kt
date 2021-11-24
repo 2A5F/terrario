@@ -20,10 +20,12 @@ import net.minecraft.client.render.entity.model.SinglePartEntityModel
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.*
 import net.minecraft.entity.attribute.DefaultAttributeContainer
+import net.minecraft.entity.damage.DamageSource
 import net.minecraft.entity.mob.HostileEntity
-import net.minecraft.loot.LootTables
+import net.minecraft.fluid.Fluid
 import net.minecraft.nbt.NbtCompound
 import net.minecraft.particle.ParticleEffect
+import net.minecraft.tag.Tag
 import net.minecraft.util.Identifier
 import net.minecraft.util.math.MathHelper
 import net.minecraft.world.LocalDifficulty
@@ -77,6 +79,27 @@ open class SlimeEntity(entityType: EntityType<out SlimeEntity>, world: World, va
     override fun getParticles(): ParticleEffect = particles()
 
     override fun getLootTableId(): Identifier = type.lootTableId
+
+    override fun isDisallowedInPeaceful() = true
+
+    override fun getJumpVelocity(): Float {
+        return 1f * this.jumpVelocityMultiplier
+    }
+
+    override fun jump() {
+        val vec3d = velocity
+        this.setVelocity(vec3d.x, this.jumpVelocity.toDouble(), vec3d.z)
+        velocityDirty = true
+    }
+
+    override fun swimUpward(fluid: Tag<Fluid>?) {
+        velocity = velocity.add(0.0, 0.25, 0.0)
+    }
+
+    override fun handleFallDamage(fallDistance: Float, damageMultiplier: Float, damageSource: DamageSource?): Boolean {
+        if (fallDistance < 50) return false
+        return super.handleFallDamage(fallDistance, damageMultiplier * 0.01f, damageSource)
+    }
 }
 
 @Environment(EnvType.CLIENT)

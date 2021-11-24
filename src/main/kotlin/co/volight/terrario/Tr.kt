@@ -13,6 +13,7 @@ import co.volight.terrario.core.*
 import co.volight.terrario.entities.Slime
 import co.volight.terrario.items.Gel
 import co.volight.terrario.items.Ore
+import co.volight.terrario.items.SpawnEgg
 import co.volight.terrario.particles.GelParticle
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -22,7 +23,7 @@ import net.minecraft.entity.LivingEntity
 import net.minecraft.item.Item
 import net.minecraft.particle.ParticleEffect
 
-object Tr: Idspace {
+object Tr : Idspace {
     const val id = "tr"
     const val logName = "[Terrario]"
     val logger = LogManager.getLogger()!!
@@ -44,6 +45,10 @@ object Tr: Idspace {
         Gel.Blue,
         Gel.Red,
         Gel.Purple,
+        SpawnEgg.GreenSlime,
+        SpawnEgg.BlueSlime,
+        SpawnEgg.RedSlime,
+        SpawnEgg.PurpleSlime,
     )
     val entities = listOf<RegEntity<out Entity>>()
     val livingEntities = listOf<RegLivingEntity<out LivingEntity>>(

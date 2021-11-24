@@ -16,5 +16,10 @@
   "item.tr.green_gel": "Green Gel",
   "item.tr.blue_gel": "Blue Gel",
   "item.tr.red_gel": "Red Gel",
-  "item.tr.purple_gel": "Purple Gel"
+  "item.tr.purple_gel": "Purple Gel",
+
+  "item.tr.green_slime_spawn_egg": "Green Slime Spawn Egg",
+  "item.tr.blue_slime_spawn_egg": "Blue Slime Spawn Egg",
+  "item.tr.red_slime_spawn_egg": "Red Slime Spawn Egg",
+  "item.tr.purple_slime_spawn_egg": "Purple Slime Spawn Egg"
 }
