@@ -1,4 +1,5 @@
 {
+  "item.tr.tr": "Terrario",
   "itemGroup.tr.main": "Terrario",
 
   "block.tr.tin_ore": "Tin Ore",
@@ -17,6 +18,11 @@
   "item.tr.blue_gel": "Blue Gel",
   "item.tr.red_gel": "Red Gel",
   "item.tr.purple_gel": "Purple Gel",
+
+  "entity.tr.green_slime": "Green Slime",
+  "entity.tr.blue_slime": "Blue Slime",
+  "entity.tr.red_slime": "Red Slime",
+  "entity.tr.purple_slime": "Purple Slime",
 
   "item.tr.green_slime_spawn_egg": "Green Slime Spawn Egg",
   "item.tr.blue_slime_spawn_egg": "Blue Slime Spawn Egg",

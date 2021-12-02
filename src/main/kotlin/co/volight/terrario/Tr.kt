@@ -14,6 +14,7 @@ import co.volight.terrario.entities.Slime
 import co.volight.terrario.items.Gel
 import co.volight.terrario.items.Ore
 import co.volight.terrario.items.SpawnEgg
+import co.volight.terrario.items.TrLogo
 import co.volight.terrario.particles.GelParticle
 import net.fabricmc.api.EnvType
 import net.fabricmc.api.Environment
@@ -36,6 +37,7 @@ object Tr : Idspace {
         OreBlock.Platinum,
     )
     val items = listOf<Reg<out Item>>(
+        TrLogo,
         Ore.Tin,
         Ore.Lead,
         Ore.Silver,

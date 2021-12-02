@@ -10,3 +10,10 @@ abstract class SimpleItem(override val name: String): Reg<Item>, WithItemGroup {
         Item(settings())
     }
 }
+
+object TrLogo: Reg<Item> {
+    override val name = "tr"
+    override val impl: Item by lazy {
+        Item(settings())
+    }
+}
