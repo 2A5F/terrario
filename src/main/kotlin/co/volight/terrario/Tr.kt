@@ -1,19 +1,25 @@
 package co.volight.terrario
 
+
+import co.volight.terrario.Tr.biomeModifies
 import org.apache.logging.log4j.LogManager
 import co.volight.terrario.Tr.logName
 import co.volight.terrario.Tr.logger
 import co.volight.terrario.Tr.blocks
+import co.volight.terrario.Tr.configuredFeatures
 import co.volight.terrario.Tr.entities
 import co.volight.terrario.Tr.livingEntities
 import co.volight.terrario.Tr.items
 import co.volight.terrario.Tr.particles
+import co.volight.terrario.Tr.placedFeatures
+import co.volight.terrario.biome.modify.OreBiomeModify
 import co.volight.terrario.blocks.OreBlock
 import co.volight.terrario.core.*
-import co.volight.terrario.entities.Slime
-import co.volight.terrario.items.Gel
-import co.volight.terrario.items.Ore
-import co.volight.terrario.items.SpawnEgg
+import co.volight.terrario.entities.SlimeEntity
+import co.volight.terrario.feature.OreFeature
+import co.volight.terrario.items.GelItem
+import co.volight.terrario.items.OreItem
+import co.volight.terrario.items.SpawnEggItem
 import co.volight.terrario.items.TrLogo
 import co.volight.terrario.particles.GelParticle
 import net.fabricmc.api.EnvType
@@ -23,6 +29,8 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
 import net.minecraft.item.Item
 import net.minecraft.particle.ParticleEffect
+import net.minecraft.world.gen.feature.ConfiguredFeature
+import net.minecraft.world.gen.feature.PlacedFeature
 
 object Tr : Idspace {
     const val id = "tr"
@@ -38,34 +46,59 @@ object Tr : Idspace {
     )
     val items = listOf<Reg<out Item>>(
         TrLogo,
-        Ore.Tin,
-        Ore.Lead,
-        Ore.Silver,
-        Ore.Tungsten,
-        Ore.Platinum,
-        Gel.Green,
-        Gel.Blue,
-        Gel.Red,
-        Gel.Purple,
-        SpawnEgg.GreenSlime,
-        SpawnEgg.BlueSlime,
-        SpawnEgg.RedSlime,
-        SpawnEgg.PurpleSlime,
+        OreItem.Tin,
+        OreItem.Lead,
+        OreItem.Silver,
+        OreItem.Tungsten,
+        OreItem.Platinum,
+        GelItem.Green,
+        GelItem.Blue,
+        GelItem.Red,
+        GelItem.Purple,
+        SpawnEggItem.GreenSlime,
+        SpawnEggItem.BlueSlime,
+        SpawnEggItem.RedSlime,
+        SpawnEggItem.PurpleSlime,
     )
     val entities = listOf<RegEntity<out Entity>>()
     val livingEntities = listOf<RegLivingEntity<out LivingEntity>>(
-        Slime.Green,
-        Slime.Blue,
-        Slime.Red,
-        Slime.Purple,
+        SlimeEntity.Green,
+        SlimeEntity.Blue,
+        SlimeEntity.Red,
+        SlimeEntity.Purple,
     )
     val particles = listOf<RegParticle<out ParticleEffect>>(
         GelParticle.Green,
         GelParticle.Blue,
         GelParticle.Red,
-        GelParticle.Purple
+        GelParticle.Purple,
+    )
+    val configuredFeatures = listOf<Reg<out ConfiguredFeature<*, *>>>(
+        OreFeature.Tin,
+        OreFeature.Lead,
+        OreFeature.Silver,
+        OreFeature.Tungsten,
+        OreFeature.Platinum,
+    )
+    val placedFeatures = listOf<Reg<out PlacedFeature>>(
+        OreFeature.Tin.Normal,
+        OreFeature.Lead.Upper,
+        OreFeature.Lead.Middle,
+        OreFeature.Silver.Normal,
+        OreFeature.Tungsten.Normal,
+        OreFeature.Platinum.Normal,
+    )
+    val biomeModifies = listOf(
+        OreBiomeModify.Tin,
+        OreBiomeModify.Lead,
+        OreBiomeModify.Silver,
+        OreBiomeModify.Tungsten,
+        OreBiomeModify.Platinum,
     )
 }
+
+// clear stone command
+// /fill ~-8 ~-64 ~-8 ~8 ~ ~8 minecraft:air replace minecraft:stone
 
 @Suppress("unused")
 fun init() {
@@ -83,6 +116,15 @@ fun init() {
 
     initParticles()
     logger.info("$logName Particles initialized")
+
+    initConfiguredFeatures()
+    logger.info("$logName Configured Features initialized")
+
+    initPlacedFeatures()
+    logger.info("$logName Placed Features initialized")
+
+    initBiomeModifies()
+    logger.info("$logName Biome Modifies initialized")
 }
 
 fun initBlocks() {
@@ -118,6 +160,24 @@ fun initEntityAttrs() {
 fun initParticles() {
     for (it in particles) {
         it.regParticle()
+    }
+}
+
+fun initConfiguredFeatures() {
+    for (it in configuredFeatures) {
+        it.regConfiguredFeature()
+    }
+}
+
+fun initPlacedFeatures() {
+    for (it in placedFeatures) {
+        it.regPlacedFeature()
+    }
+}
+
+fun initBiomeModifies() {
+    for (it in biomeModifies) {
+        it.reg()
     }
 }
 

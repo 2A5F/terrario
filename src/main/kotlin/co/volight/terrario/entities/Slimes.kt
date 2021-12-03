@@ -37,7 +37,9 @@ typealias McSlimeEntityRenderer = net.minecraft.client.render.entity.SlimeEntity
 typealias McSlimeEntityModel<T> = net.minecraft.client.render.entity.model.SlimeEntityModel<T>
 typealias MCSlimeOverlayFeatureRenderer<T> = net.minecraft.client.render.entity.feature.SlimeOverlayFeatureRenderer<T>
 
-object Slime {
+data class SlimeEntityData(val size: Int, val scale: Float)
+
+open class SlimeEntity(entityType: EntityType<out SlimeEntity>, world: World, val data: SlimeEntityData, val particles: () -> ParticleEffect) : McSlimeEntity(entityType, world) {
     abstract class Basic(override val name: String, open val scale: Float = 1.0f, val particles: () -> ParticleEffect): RegLivingEntity<SlimeEntity> {
         open val size = 2
         override val impl: EntityType<SlimeEntity> by lazy {
@@ -54,11 +56,7 @@ object Slime {
     object Blue: Basic("blue_slime", particles = { GelParticle.Blue.impl })
     object Red: Basic("red_slime", particles = { GelParticle.Red.impl })
     object Purple: Basic("purple_slime", 1.125f, particles = { GelParticle.Purple.impl })
-}
 
-data class SlimeEntityData(val size: Int, val scale: Float)
-
-open class SlimeEntity(entityType: EntityType<out SlimeEntity>, world: World, val data: SlimeEntityData, val particles: () -> ParticleEffect) : McSlimeEntity(entityType, world) {
     override fun initialize(
         world: ServerWorldAccess,
         difficulty: LocalDifficulty,

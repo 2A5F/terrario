@@ -3,10 +3,10 @@
   "package": "co.volight.terrario.mixin.entities",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-  ],
-  "client": [
+    "DefaultBiomeFeaturesMixin",
     "MixinSlimeEntityDirectInvoke"
   ],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   }

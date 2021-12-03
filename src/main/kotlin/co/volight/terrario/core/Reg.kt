@@ -22,14 +22,26 @@ import net.minecraft.item.Item
 import net.minecraft.particle.ParticleEffect
 import net.minecraft.particle.ParticleType
 import net.minecraft.util.Identifier
+import net.minecraft.util.registry.BuiltinRegistries
 import net.minecraft.util.registry.Registry
+import net.minecraft.util.registry.RegistryKey
 import net.minecraft.world.World
+import net.minecraft.world.gen.decorator.*
+import net.minecraft.world.gen.feature.ConfiguredFeature
+import net.minecraft.world.gen.feature.PlacedFeature
+
+fun <T> regKeyOf(registry: RegistryKey<out Registry<T>>, id: Identifier): RegistryKey<T> = RegistryKey.of(registry, id)
+fun <S, T> S.regKeyOf(registry: RegistryKey<out Registry<T>>, id: String): RegistryKey<T> where S : Idspace = RegistryKey.of(registry, Identifier(idspace, id))
 
 interface Idspace {
     val idspace: String get() = Tr.id
 }
 
-fun <S: Idspace> S.identifier(path: String) = Identifier(idspace, path)
+interface Regable : Idspace {
+    fun reg()
+}
+
+fun <S : Idspace> S.identifier(path: String) = Identifier(idspace, path)
 
 interface Nameable {
     val name: String
@@ -39,67 +51,67 @@ interface Instance<T> : Idspace, Nameable {
     val impl: T
 }
 
-interface RegBasic: Idspace, Nameable
+interface RegBasic : Idspace, Nameable
 
-interface Reg<T>: Instance<T>, RegBasic
+interface Reg<T> : Instance<T>, RegBasic
 
 fun interface JoinItemGroup {
     fun joinItemGroup(settings: Item.Settings)
 }
 
-interface WithItemGroup: JoinItemGroup {
+interface WithItemGroup : JoinItemGroup {
     override fun joinItemGroup(settings: Item.Settings) {
         settings.group(Group.main)
     }
 }
 
-fun <S> S.settings(): Item.Settings where S: Instance<out Item> {
+fun <S> S.settings(): Item.Settings where S : Instance<out Item> {
     return FabricItemSettings()
 }
 
 @JvmName("settingsWithItemGroup")
-fun <S> S.settings(): Item.Settings where S: Instance<out Item>, S: JoinItemGroup {
+fun <S> S.settings(): Item.Settings where S : Instance<out Item>, S : JoinItemGroup {
     return FabricItemSettings().also(::joinItemGroup)
 }
 
-fun <S> S.regBlock() where S: Instance<out Block>, S: Idspace, S: Nameable {
+fun <S> S.regBlock() where S : Instance<out Block>, S : Idspace, S : Nameable {
     Registry.register(Registry.BLOCK, Identifier(idspace, name), impl)
 }
 
-fun <S> S.regItem() where S: Instance<out Item>, S: Idspace, S: Nameable {
+fun <S> S.regItem() where S : Instance<out Item>, S : Idspace, S : Nameable {
     Registry.register(Registry.ITEM, Identifier(idspace, name), impl)
 }
 
-fun <T> makeBlockItem(block: T): BlockItem where T: Block {
+fun <T> makeBlockItem(block: T): BlockItem where T : Block {
     if (block is JoinItemGroup) return makeBlockItem(block)
     return BlockItem(block, Item.Settings())
 }
 
-fun <T> JoinItemGroup.makeBlockItem(block: T): BlockItem where T: Block {
+fun <T> JoinItemGroup.makeBlockItem(block: T): BlockItem where T : Block {
     return BlockItem(block, Item.Settings().also(::joinItemGroup))
 }
 
-fun <S> S.regBlockItem() where S: Instance<out Block>, S: Idspace, S: Nameable {
+fun <S> S.regBlockItem() where S : Instance<out Block>, S : Idspace, S : Nameable {
     if (this is JoinItemGroup) return regBlockItem()
     Registry.register(Registry.ITEM, Identifier(idspace, name), makeBlockItem(impl))
 }
 
 @JvmName("regBlockItemWithItemGroup")
-fun <S> S.regBlockItem() where S: Instance<out Block>, S: Idspace, S: Nameable, S: JoinItemGroup {
+fun <S> S.regBlockItem() where S : Instance<out Block>, S : Idspace, S : Nameable, S : JoinItemGroup {
     Registry.register(Registry.ITEM, Identifier(idspace, name), makeBlockItem(impl))
 }
 
-interface RegEntity<T: Entity>: Reg<EntityType<T>> {
+interface RegEntity<T : Entity> : Reg<EntityType<T>> {
     val render: (context: EntityRendererFactory.Context) -> EntityRenderer<T>
 }
 
-interface RegLivingEntity<T: LivingEntity>: RegEntity<T> {
+interface RegLivingEntity<T : LivingEntity> : RegEntity<T> {
     val attr: DefaultAttributeContainer.Builder
 }
 
-fun <S, T> S.makeEntity(create: (type: EntityType<T>, world: World) -> T) where S: RegEntity<T>, T: Entity = create
+fun <S, T> S.makeEntity(create: (type: EntityType<T>, world: World) -> T) where S : RegEntity<T>, T : Entity = create
 
-fun <S, T> S.makeRender(render: (context: EntityRendererFactory.Context) -> EntityRenderer<T>) where S: RegEntity<T>, T: Entity = render
+fun <S, T> S.makeRender(render: (context: EntityRendererFactory.Context) -> EntityRenderer<T>) where S : RegEntity<T>, T : Entity = render
 
 fun <S> S.regEntityType() where S : RegEntity<out Entity> {
     Registry.register(Registry.ENTITY_TYPE, Identifier(idspace, name), impl)
@@ -147,17 +159,39 @@ fun <S, T> S.regEntityRender() where S : RegLivingEntity<T>, T : LivingEntity {
 //    }
 //}
 
-interface RegParticle<T: ParticleEffect> : Reg<ParticleType<T>> {
+interface RegParticle<T : ParticleEffect> : Reg<ParticleType<T>> {
     val factory: (parameters: T, world: ClientWorld, x: Double, y: Double, z: Double, vx: Double, vy: Double, vz: Double) -> Particle?
 }
 
-fun <S, T> S.makeFactory(f: (parameters: T, world: ClientWorld, x: Double, y: Double, z: Double, vx: Double, vy: Double, vz: Double) -> Particle?) where S : RegParticle<T>, T: ParticleEffect = f
+fun <S, T> S.makeFactory(
+    f: (parameters: T, world: ClientWorld, x: Double, y: Double, z: Double, vx: Double, vy: Double, vz: Double) -> Particle?
+) where S : RegParticle<T>, T : ParticleEffect = f
 
 fun <S> S.regParticle() where S : RegParticle<out ParticleEffect> {
     Registry.register(Registry.PARTICLE_TYPE, Identifier(idspace, name), impl)
 }
 
 @Environment(EnvType.CLIENT)
-fun <S, T> S.regParticleFactory() where S : RegParticle<T>, T: ParticleEffect {
+fun <S, T> S.regParticleFactory() where S : RegParticle<T>, T : ParticleEffect {
     ParticleFactoryRegistry.getInstance().register(impl, factory)
+}
+
+fun Reg<out PlacedFeature>.modifiers(countModifier: PlacementModifier, heightModifier: PlacementModifier): List<PlacementModifier> {
+    return listOf(countModifier, SquarePlacementModifier.of(), heightModifier, BiomePlacementModifier.of())
+}
+
+fun Reg<out PlacedFeature>.modifiersWithCount(count: Int, heightModifier: PlacementModifier): List<PlacementModifier> {
+    return modifiers(CountPlacementModifier.of(count), heightModifier)
+}
+
+fun Reg<out PlacedFeature>.modifiersWithRarity(chance: Int, heightModifier: PlacementModifier): List<PlacementModifier> {
+    return modifiers(RarityFilterPlacementModifier.of(chance), heightModifier)
+}
+
+fun <S> S.regConfiguredFeature() where S : Reg<out ConfiguredFeature<*, *>> {
+    Registry.register(BuiltinRegistries.CONFIGURED_FEATURE, Identifier(idspace, name), impl)
+}
+
+fun <S> S.regPlacedFeature() where S : Reg<out PlacedFeature> {
+    Registry.register(BuiltinRegistries.PLACED_FEATURE, Identifier(idspace, name), impl)
 }

@@ -2,7 +2,7 @@ package co.volight.terrario.particles
 
 import co.volight.terrario.core.RegParticle
 import co.volight.terrario.core.makeFactory
-import co.volight.terrario.items.Gel
+import co.volight.terrario.items.GelItem
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
@@ -15,8 +15,8 @@ object GelParticle {
             CrackParticle(world, x, y, z, ItemStack(item()))
         }
     }
-    object Green: Basic("item_green_gel", { Gel.Green.impl })
-    object Blue: Basic("item_blue_gel", { Gel.Blue.impl })
-    object Red: Basic("item_red_gel", { Gel.Red.impl })
-    object Purple: Basic("item_purple_gel", { Gel.Purple.impl })
+    object Green: Basic("item_green_gel", { GelItem.Green.impl })
+    object Blue: Basic("item_blue_gel", { GelItem.Blue.impl })
+    object Red: Basic("item_red_gel", { GelItem.Red.impl })
+    object Purple: Basic("item_purple_gel", { GelItem.Purple.impl })
 }

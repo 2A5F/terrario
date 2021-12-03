@@ -1,6 +1,6 @@
 package co.volight.terrario.items
 
-object Ore {
+object OreItem {
     object Tin: SimpleItem("raw_tin")
     object Lead: SimpleItem("raw_lead")
     object Silver: SimpleItem("raw_silver")

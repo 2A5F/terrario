@@ -1,7 +1,6 @@
 package co.volight.terrario.itemgroups
 
 import co.volight.terrario.Tr
-import co.volight.terrario.blocks.OreBlock
 import co.volight.terrario.items.TrLogo
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Identifier
