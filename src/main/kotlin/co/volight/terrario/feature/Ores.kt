@@ -17,6 +17,7 @@ object OreFeature {
                 OreFeatureConfig(
                     listOf(
                         OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, OreBlock.Tin.impl.defaultState),
+                        OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, OreBlock.Tin.Deepslate.impl.defaultState),
                     ),
                     10
                 )
@@ -36,6 +37,7 @@ object OreFeature {
                 OreFeatureConfig(
                     listOf(
                         OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, OreBlock.Lead.impl.defaultState),
+                        OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, OreBlock.Lead.Deepslate.impl.defaultState),
                     ),
                     9
                 )
@@ -61,6 +63,7 @@ object OreFeature {
                 OreFeatureConfig(
                     listOf(
                         OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, OreBlock.Silver.impl.defaultState),
+                        OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, OreBlock.Silver.Deepslate.impl.defaultState),
                     ),
                     10
                 )
@@ -80,6 +83,7 @@ object OreFeature {
                 OreFeatureConfig(
                     listOf(
                         OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, OreBlock.Tungsten.impl.defaultState),
+                        OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, OreBlock.Tungsten.Deepslate.impl.defaultState),
                     ),
                     10
                 )
@@ -99,6 +103,7 @@ object OreFeature {
                 OreFeatureConfig(
                     listOf(
                         OreFeatureConfig.createTarget(OreConfiguredFeatures.STONE_ORE_REPLACEABLES, OreBlock.Platinum.impl.defaultState),
+                        OreFeatureConfig.createTarget(OreConfiguredFeatures.DEEPSLATE_ORE_REPLACEABLES, OreBlock.Platinum.Deepslate.impl.defaultState),
                     ),
                     9
                 )

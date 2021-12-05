@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:base_stone_overworld",
+    "#minecraft:stone_ore_replaceables",
+    "#minecraft:deepslate_ore_replaceables",
+    "#minecraft:dirt",
+    "#minecraft:sand",
+    "minecraft:sand_stone",
+    "minecraft:gravel",
+    "minecraft:water",
+    "minecraft:lava"
+  ]
+}

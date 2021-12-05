@@ -5,6 +5,11 @@
     "tr:lead_ore",
     "tr:silver_ore",
     "tr:tungsten_ore",
-    "tr:platinum_ore"
+    "tr:platinum_ore",
+    "tr:deepslate_tin_ore",
+    "tr:deepslate_lead_ore",
+    "tr:deepslate_silver_ore",
+    "tr:deepslate_tungsten_ore",
+    "tr:deepslate_platinum_ore"
   ]
 }

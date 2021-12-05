@@ -72,5 +72,7 @@ tasks {
         filesMatching("fabric.mod.json") {
             expand("version" to version)
         }
+
+        exclude("**/*.psd")
     }
 }

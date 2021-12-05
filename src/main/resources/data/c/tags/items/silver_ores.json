@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "tr:silver_ore"
+    "tr:silver_ore",
+    "tr:deepslate_silver_ore"
   ]
 }

@@ -39,10 +39,15 @@ object Tr : Idspace {
 
     val blocks = listOf<Reg<out Block>>(
         OreBlock.Tin,
+        OreBlock.Tin.Deepslate,
         OreBlock.Lead,
+        OreBlock.Lead.Deepslate,
         OreBlock.Silver,
+        OreBlock.Silver.Deepslate,
         OreBlock.Tungsten,
+        OreBlock.Tungsten.Deepslate,
         OreBlock.Platinum,
+        OreBlock.Platinum.Deepslate,
     )
     val items = listOf<Reg<out Item>>(
         TrLogo,
@@ -98,9 +103,8 @@ object Tr : Idspace {
 }
 
 // clear stone command
-// /fill ~-8 ~-64 ~-8 ~8 ~ ~8 minecraft:air replace minecraft:stone
+// /fill ~-8 ~-64 ~-8 ~8 ~ ~8 minecraft:air replace #tr:clear_stone
 
-@Suppress("unused")
 fun init() {
     initBlocks()
     logger.info("$logName Blocks initialized")
@@ -181,7 +185,6 @@ fun initBiomeModifies() {
     }
 }
 
-@Suppress("unused")
 @Environment(EnvType.CLIENT)
 fun initClient() {
     initBlockLayers()

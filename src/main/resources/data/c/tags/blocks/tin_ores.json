@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "tr:tin_ore"
+    "tr:tin_ore",
+    "tr:deepslate_tin_ore"
   ]
 }

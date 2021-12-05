@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "tr:tungsten_ore"
+    "tr:tungsten_ore",
+    "tr:deepslate_tungsten_ore"
   ]
 }

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "tr:lead_ore"
+    "tr:lead_ore",
+    "tr:deepslate_lead_ore"
   ]
 }

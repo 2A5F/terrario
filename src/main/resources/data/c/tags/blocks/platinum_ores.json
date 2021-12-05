@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "tr:platinum_ore"
+    "tr:platinum_ore",
+    "tr:deepslate_platinum_ore"
   ]
 }

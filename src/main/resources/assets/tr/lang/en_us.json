@@ -8,6 +8,12 @@
   "block.tr.tungsten_ore": "Tungsten Ore",
   "block.tr.platinum_ore": "Platinum Ore",
 
+  "block.tr.deepslate_tin_ore": "Deepslate Tin Ore",
+  "block.tr.deepslate_lead_ore": "Deepslate Lead Ore",
+  "block.tr.deepslate_silver_ore": "Deepslate Silver Ore",
+  "block.tr.deepslate_tungsten_ore": "Deepslate Tungsten Ore",
+  "block.tr.deepslate_platinum_ore": "Deepslate Platinum Ore",
+
   "item.tr.raw_tin": "Raw Tin",
   "item.tr.raw_lead": "Raw Lead",
   "item.tr.raw_silver": "Raw Silver",
