@@ -1,6 +1,10 @@
+@file:Environment(value = EnvType.CLIENT)
+
 package co.volight.terrario.client.gui
 
-import co.volight.terrario.mixin.InGameHudAccessor
+import co.volight.terrario.mixin.client.gui.InGameHudAccessor
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 import net.minecraft.client.font.TextRenderer
 import net.minecraft.entity.player.PlayerEntity
 

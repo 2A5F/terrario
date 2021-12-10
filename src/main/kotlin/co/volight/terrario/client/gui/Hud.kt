@@ -1,8 +1,12 @@
+@file:Environment(value = EnvType.CLIENT)
+
 package co.volight.terrario.client.gui
 
 import co.volight.terrario.core.toFixed
-import co.volight.terrario.mixin.InGameHudAccessor
+import co.volight.terrario.mixin.client.gui.InGameHudAccessor
 import com.mojang.blaze3d.systems.RenderSystem
+import net.fabricmc.api.EnvType
+import net.fabricmc.api.Environment
 import net.minecraft.client.gui.DrawableHelper
 import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.attribute.EntityAttributes
