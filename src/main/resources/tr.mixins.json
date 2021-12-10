@@ -1,11 +1,14 @@
 {
   "required": true,
-  "package": "co.volight.terrario.mixin.entities",
+  "package": "co.volight.terrario.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "MixinSlimeEntityDirectInvoke"
+    "InGameHudAccessor",
+    "entities.MixinSlimeEntityDirectInvoke"
   ],
-  "client": [],
+  "client": [
+    "client.gui.MixinInGameHud"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
