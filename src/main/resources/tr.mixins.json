@@ -3,7 +3,8 @@
   "package": "co.volight.terrario.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
-    "entities.MixinSlimeEntityDirectInvoke"
+    "entities.MixinSlimeEntityDirectInvoke",
+    "entities.MixinLivingEntity"
   ],
   "client": [
     "client.gui.InGameHudAccessor",

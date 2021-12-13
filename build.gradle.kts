@@ -4,6 +4,7 @@ plugins {
     id("fabric-loom")
     `maven-publish`
     kotlin("jvm")
+    scala
     java
 }
 
@@ -20,6 +21,8 @@ val yarn_mappings: String by project
 val loader_version: String by project
 val fabric_version: String by project
 val fabric_kotlin_version: String by project
+val scala_version: String by project
+val fabric_scala_version: String by project
 val modmenu_version: String by project
 val rei_version: String by project
 val wthit_version: String by project
@@ -30,6 +33,8 @@ println("yarn_mappings: $yarn_mappings")
 println("loader_version: $loader_version")
 println("fabric_version: $fabric_version")
 println("fabric_kotlin_version: $fabric_kotlin_version")
+println("scala_version: $scala_version")
+println("fabric_scala_version: $fabric_scala_version")
 println("modmenu_version: $modmenu_version")
 println("rei_version: $rei_version")
 println("wthit_version: $wthit_version")
@@ -48,6 +53,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-loader:${loader_version}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${fabric_version}")
     modImplementation( "net.fabricmc:fabric-language-kotlin:${fabric_kotlin_version}")
+//    modImplementation( "net.fabricmc:fabric-language-scala:${fabric_scala_version}")
 
     modRuntimeOnly("com.terraformersmc:modmenu:${modmenu_version}")
 //    modRuntimeOnly("me.shedaniel:RoughlyEnoughItems-api-fabric:${rei_version}")

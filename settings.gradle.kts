@@ -1,9 +1,11 @@
 pluginManagement {
     val loom_version: String by settings
     val kotlin_version: String by settings
+    val scala_version: String by settings
 
     println("loom_version: $loom_version")
     println("kotlin_version: $kotlin_version")
+    println("scala_version: $scala_version")
     println()
 
     repositories {

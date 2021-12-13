@@ -21,10 +21,16 @@ public abstract class MixinInGameHud extends DrawableHelper implements InGameHud
         HudKt.renderHealthBarText(this, matrices, tickDelta, ci);
     }
 
-    @Redirect(method = "renderStatusBars",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderHealthBar(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/entity/player/PlayerEntity;IIIIFIIIZ)V"))
-    void renderHealthBar(InGameHud instance, MatrixStack matrices, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking) {
-        HudKt.renderHealthBar(this, matrices, player, lines, regeneratingHeartIndex, maxHealth, lastHealth, health, absorption, blinking);
+    @Redirect(method = "render",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderStatusBars(Lnet/minecraft/client/util/math/MatrixStack;)V"))
+    void renderStatusBars(InGameHud instance, MatrixStack matrices) {
+        HudKt.renderStatusBars(this, matrices);
     }
+
+//    @Redirect(method = "renderStatusBars",
+//            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/hud/InGameHud;renderHealthBar(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/entity/player/PlayerEntity;IIIIFIIIZ)V"))
+//    void renderHealthBar(InGameHud instance, MatrixStack matrices, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking) {
+//        HudKt.renderHealthBar(this, matrices, player, lines, regeneratingHeartIndex, maxHealth, lastHealth, health, absorption, blinking);
+//    }
 
 }
